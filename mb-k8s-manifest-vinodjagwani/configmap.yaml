@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mb-config
+  namespace: mb-namespace
+data:
+  config-key: config-value

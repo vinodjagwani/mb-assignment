@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mb-deployment
+  namespace: mb-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mb-app
+  template:
+    metadata:
+      labels:
+        app: mb-app
+    spec:
+      containers:
+        - name: mb-container
+          image: busybox
+          command: ["sh", "-c", "while true; do echo hello; sleep 10;done"]
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mb-secret
+                  key: secret-key
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+            - name: efs-volume
+              mountPath: /mnt/efs
+      volumes:
+        - name: config-volume
+          configMap:
+            name: mb-config
+        - name: efs-volume
+          persistentVolumeClaim:
+            claimName: efs-pvc
