@@ -10,6 +10,10 @@ variable "security_group_id" {
   description = "The security group ID for RDS"
   type        =  string
   default     = "security_group_id"
+}
 
+variable "vpc_id" {
+  description = "vpc id"
+  type        =  string
 }
 

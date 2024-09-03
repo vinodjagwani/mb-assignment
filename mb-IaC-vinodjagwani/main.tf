@@ -2,8 +2,8 @@
 
 provider "aws" {
   region     = var.aws_region
-  access_key = "access_key"
-  secret_key = "secret_key"
+  access_key = ""
+  secret_key = ""
 }
 
 module "vpc" {
@@ -13,6 +13,7 @@ module "vpc" {
 module "rds" {
   source = "./modules/rds"
   private_subnets = module.vpc.private_subnets
+  vpc_id = module.vpc.vpc_id
 }
 
 module "ec2" {
